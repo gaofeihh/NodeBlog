@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="https://cdn.bootcss.com/jquery/3.4.0/jquery.js"></script>
+    <!--引入layui 注意路径-->
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <script src="layui/layui.js"></script>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        @font-face {
+            font-family: 'iconfont';
+            src: url('./css/font_aczm88rqnxw/iconfont.eot');
+            src: url('./css/font_aczm88rqnxw/iconfont.eot?#iefix') format('embedded-opentype'),
+            url('./css/font_aczm88rqnxw/iconfont.woff2') format('woff2'),
+            url('./css/font_aczm88rqnxw/iconfont.woff') format('woff'),
+            url('./css/font_aczm88rqnxw/iconfont.ttf') format('truetype'),
+            url('./css/font_aczm88rqnxw/iconfont.svg#iconfont') format('svg');
+        }
+
+        .iconfont {
+            font-family: "iconfont" !important;
+            font-size: 18px;
+            font-style: normal;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+
+        #menu{
+            height: 40px;
+            position: relative;
+        }
+        #menu ul {
+            list-style-type: none;
+            position: absolute;
+            margin-right: 100px;
+            right: 0;
+            top: 0;
+        }
+        #menu ul li{
+            float: left;
+            display: none;
+            height: 40px;
+            width: 80px;
+            text-align: center;
+            line-height: 40px;
+        }
+        #menu span.iconfont::after{
+            content: "\e64c";
+            height: 40px;
+            width: 80px;
+            text-align: center;
+            line-height: 40px;
+
+        }
+
+        @font-face {
+            font-family: 'iconfont';
+            src: url('./css/font_r7gqbnjdqt/iconfont.eot');
+            src: url('./css/font_r7gqbnjdqt/iconfont.eot?#iefix') format('embedded-opentype'),
+            url('./css/font_r7gqbnjdqt/iconfont.woff2') format('woff2'),
+            url('./css/font_r7gqbnjdqt/iconfont.woff') format('woff'),
+            url('./css/font_r7gqbnjdqt/iconfont.ttf') format('truetype'),
+            url('./css/font_r7gqbnjdqt/iconfont.svg#iconfont') format('svg');
+        }
+
+        .back {
+            font-family: "iconfont" !important;
+            font-size: 16px;
+            font-style: normal;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        #menu span{
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 40px;
+            width: 80px;
+            text-align: center;
+            line-height: 40px;
+        }
+        #menu span.back::after{
+            content: "\e60e";
+
+        }
+    </style>
+</head>
+<body>
+<div id="menu">
+    <ul>
+        <li>首页</li>
+        <li>文章</li>
+        <li>个人中心</li>
+        <li>联系</li>
+    </ul>
+    <span class="iconfont"></span>
+</div>
+
+<!-- 点击菜单图标显示 -->
+<script type="text/javascript">
+    $(function(){
+        let status = true;
+        $("#menu span").on("click",function(){
+            if(status) {
+                $("#menu ul li").show(800);
+                this.className = "back";
+            }else{
+                $("#menu ul li").hide(600);
+                this.className = "iconfont";
+
+            }
+            status = !status;
+
+        })
+    })
+</script>

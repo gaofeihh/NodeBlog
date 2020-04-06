@@ -1,0 +1,153 @@
+<!--//这里是前端主页-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--引入layui 注意路径!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+    <link rel="stylesheet" href="static/layui/css/layui.css">
+    <script src="static/layui/layui.js"></script>
+    <!--引入jquery -->
+    <script src="https://cdn.bootcss.com/jquery/3.4.0/jquery.js"></script>
+</head>
+<body>
+<!--    &lt;!&ndash;处理登录注册面板&ndash;&gt; layui-bg-gray-->
+<div class="layui-tab">
+    <ul class="layui-tab-title">
+        <li class="layui-this">登录</li>
+        <li>注册</li>
+    </ul>
+    <div class="layui-tab-content">
+        <!--登录-->
+        <div class="layui-tab-item layui-show">内容1
+            <form class="layui-form" action="">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">输入框</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">密码框</label>
+                    <div class="layui-input-inline">
+                        <input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">辅助文字</div>
+                </div>
+
+                <!--按钮区域-->
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit lay-filter="login">登录</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+        <!--注册-->
+        <div class="layui-tab-item">内容2
+            <form class="layui-form" method = "post" ><!--对register发送请求,后端需要对其进行监听存储数据-->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">用户名</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="title" required  lay-verify="user" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">密码</label>
+                    <div class="layui-input-inline">
+                        <input type="password" id="pwd" name="pwd" required lay-verify="pwd" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">辅助文字</div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">确认密码</label>
+                    <div class="layui-input-inline">
+                        <input type="password"  name="pwd2" required lay-verify="pwd2" placeholder="再次确认密码" autocomplete="off" class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">辅助文字</div>
+                </div>
+
+                <!--按钮区域-->
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit lay-filter="register">注册</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+</div>
+
+<script>
+    console.log($);
+</script>
+<script>
+    //注意：选项卡 依赖 element 模块，否则无法进行功能性操作
+    layui.use('element', function(){
+        var element = layui.element;
+    });
+
+    //表单依赖
+    layui.use('form', function(){
+        var form = layui.form;
+
+        //表单验证
+        form.verify({
+            user: function(value, item){ //value：表单的值、item：表单的DOM对象,user对应input里lay-verify的值
+                if(!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)){
+                    return '用户名不能有特殊字符';
+                }
+                if(/(^\_)|(\__)|(\_+$)/.test(value)){
+                    return '用户名首尾不能出现下划线\'_\'';
+                }
+                if(/^\d+\d+\d$/.test(value)){
+                    return '用户名不能全为数字';
+                }
+            }
+
+            //我们既支持上述函数式的方式，也支持下述数组的形式
+            //数组的两个值分别代表：[正则匹配、匹配不符时的提示文字]
+            ,pwd: [ //验证密码
+                /^[\S]{6,12}$/
+                ,'密码必须6到12位，且不能出现空格'
+            ]
+            //再次确认密码验证
+            ,pwd2:function(value,item) {
+                //得到第一次输入密码的值,进行匹配
+                let pwdValue = document.getElementById("pwd").value;
+                console.log(pwdValue);
+                // var pwdValue = $("#pwd").val();
+                if (value!== pwdValue) {
+                    return "两次密码输入不一致"
+                }
+            }
+        });
+
+
+        //监听提交
+        form.on('submit(register)', function(data){//注submit括号里对应监听的按钮的lay-filter值
+            // layer.msg(JSON.stringify(data.field));
+            // return false;
+
+            //让注册信息通过ajax发送
+            $.ajax({
+                method:"POST",
+                url:"/register",
+                data:data.field,
+                success:function (data) {
+
+                }
+            });
+            return false;
+        });
+    });
+
+
+</script>
+</body>
+</html>

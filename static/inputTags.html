@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>inputTab</title>
+	 <link rel="stylesheet" href="layui/css/layui.css">
+    <script src="layui/layui.js"></script>
+</head>
+<body>
+   <div class="layui-form-item">
+        <label class="layui-form-label">标签</label>
+        <div class="tags" id="tags">
+            <input type="text" name="" id="inputTags" placeholder="回车生成标签" autocomplete="off">
+        </div>
+    </div>
+    <script>
+        var inputTagsArr = [];
+        layui.use(['inputTags'],function(){
+            var inputTags = layui.inputTags;
+            inputTagsArr = inputTags.render({
+                elem:'#inputTags',//定义输入框input对象
+                content: ['js'],//默认标签
+                aldaBtn: false,//是否开启获取所有数据的按钮
+            })
+        })
+    </script>
+</body>
+</html>

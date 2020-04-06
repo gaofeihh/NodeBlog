@@ -1,0 +1,424 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--引入layui 注意路径-->
+    <script src="layui/layui.js"></script>
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <!--引入jquery -->
+    <script src="https://cdn.bootcss.com/jquery/3.4.0/jquery.js"></script>
+
+
+    <style>
+        .usercenterNav{
+            position: relative;
+            margin:100px auto;
+            width:900px;
+        }
+        .usercenterNav ul .right {
+            float: right;
+            position: relative;
+            width: 100px;
+            height: 60px;
+            /*发现设置top,right时,不知道到底是以什么为坐标轴*/
+
+
+        }
+        .usercenterNav .userhead{
+            position: absolute;
+            top:5px;
+            right: 40px;
+            margin-right: 18px;
+            backgound:none no-repeat center center/cover;
+            line-height: 50px;
+            width: 50px;
+            height: 50px;
+            border-radius: 25px;
+            overflow: hidden;
+        }
+        .usercenterNav ul li #loginout{
+            line-height: 60px;
+            margin-left: 50px;
+            font-size: 12px;
+            color:rgba(255,255,255,0.8);
+        }
+        .usercenterNav ul li #loginout:hover{
+            color:rgba(255,255,255,1);
+        }
+        .layui-input-block {
+            margin-left:0;
+        }
+        .layui-tab-content .layui-table td{
+            height: 75px;
+        }
+        .modifyRest {
+            display: none;
+        }
+
+        /*改变添加标签的margin*/
+        .layui-form-item #tags{
+            margin: 40px 110px;
+        }
+
+        /*设置富文本编辑器的margin*/
+        .layui-form-item .layui-layedit{
+            margin-left:0px;
+        }
+
+        .setPadding{
+            padding-top: 20px;
+        }
+        #textDiv{
+            background-color: white;
+            float: left;
+            width: 700px;
+            height: 300px;
+
+        }
+
+    </style>
+</head>
+<body>
+    <div class="usercenterNav">
+        <ul class="layui-nav" lay-filter="">
+            <li class="layui-nav-item"><a href="/">返回首页</a></li>
+            <li class="layui-nav-item layui-this"><a href="/usercenter">个人中心</a></li>
+            <li class="right">
+                <span class="userHead" style="background-image: url(/userPhoto/<%=data.photo%>)">
+
+                </span>
+                <a id="loginout" href="/loginout">退出登录</a>
+            </li>
+        </ul>
+        <!--个人中心项目 -->
+        <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+            <ul class="layui-tab-title">
+                <li class="layui-this">个人信息</li>
+                <li>修改密码</li>
+                <li>上传头像</li>
+                <%if(data.user == "admin") {%>
+                    <li>发表文章</li>
+                    <li>管理文章</li>
+                <%}%>
+            </ul>
+            <div class="layui-tab-content">
+                <!--个人信息-->
+                <div class="layui-tab-item layui-show">
+                    <form class="layui-form" action="">
+                    <table class="layui-table">
+                        <colgroup>
+                            <col width="25%">
+                            <col width="50%">
+                            <col>
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th>栏目</th>
+                            <th>值</th>
+                            <th>修改</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>用户名</td>
+                            <td><%=data.user%></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>性别</td>
+                            <td>
+                                <div class="complete"><%=data.sex%></div>
+                                <div class="modifyRest layui-form-item">
+                                    <div class="layui-input-block">
+                                        <input type="radio" name="sex" value="nan" title="男">
+                                        <input type="radio" name="sex" value="nv" title="女" checked>
+                                    </div>
+                                </div>
+                            </td>
+                            <td><button type="button" class="layui-btn layui-btn-radius">修改</button></td>
+                        </tr>
+                        <tr>
+                            <td>手机号</td>
+                            <td>
+                                <div class="complete"><%=data.phone%></div>
+                                <div class="modifyRest layui-form-item">
+                                    <div class="layui-input-block">
+                                        <input type="text" lay-verify="phone"  value="<%=data.phone%>" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                            </td>
+                            <td><button type="button" class="layui-btn layui-btn-radius">修改</button></td>
+                        </tr>
+                        <tr>
+                            <td>邮箱</td>
+                            <td>
+                                <div class="complete"><%=data.email%></div>
+                                <div class="modifyRest layui-form-item">
+                                    <div class="layui-input-block">
+                                        <input type="text" lay-verify="email" value="<%=data.email%>" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                            </td>
+                            <td><button type="button" class="layui-btn layui-btn-radius">修改</button></td>
+                        </tr>
+                        <tr>
+                            <td>个性签名</td>
+                            <td>
+                                <div class="complete"><%=data.status%></div>
+                                <div class="modifyRest layui-form-item">
+                                    <div class="layui-input-block">
+                                        <input type="text" lay-verify="status" value="<%=data.status%>" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+
+                            </td>
+                            <td><button type="button" class="layui-btn layui-btn-radius">修改</button></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit lay-filter="modify">提交</button>
+                    </div>
+                </div>
+                </form>
+                </div>
+
+                <!-- 修改密码-->
+                <div class="layui-tab-item">修改密码</div>
+
+                <!-- 上传头像-->
+                <div class="layui-tab-item">
+
+                    <button type="button" class="layui-btn" id="upload">
+                        <i class="layui-icon">&#xe67c;</i>上传图片
+                    </button>
+                </div>
+
+                <!--发表文章-->
+                <%if(data.user == "admin") {%>
+                <div class="layui-tab-item setPadding layui-bg-gray">
+                    <form class="layui-form">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">标题</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="title"   lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">标签</label>
+                            <div class="tags" id="tags">
+                                <input type="text" id="inputTags" placeholder="回车生成标签" autocomplete="off">
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">内容</label>
+                            <div id="textDiv">
+                                <textarea id="demo" style="display: none;"></textarea>
+                            </div>
+                        </div>
+
+
+                        <div class="layui-form-item">
+                            <div class="layui-input-block" style="padding-bottom: 10;margin-left: 108">
+                                <button type="button" class="layui-btn" lay-submit lay-filter="publish">发表</button>
+                            </div>
+                        </div>
+                        <script>
+
+                        </script>
+
+
+                    </form>
+                </div>
+                <%}%>
+            </div>
+        </div>
+    </div>
+    <script>
+        var lyh = lyh||{};//存储所有全局变量 主要是因为在发表文章里,涉及到了标签生成模块,富文本编辑模块的内容,
+        // 所以要取到各自的内容,则必须将他们存储数据的变量变成全局变量,造成全局变量过多,所以直接只定义一个全局变量,其余
+        // 的作为该变量的属性进行存储
+
+
+
+
+
+        //处理发表按钮
+        layui.use('form',function() {
+            var form = layui.form;
+            form.on('submit(publish)', function(data){
+                console.log(data);
+                $.ajax({
+                    method:"post",
+                    url:"/article",
+                    data:{
+                        title:data.field.title
+                        ,tag:lyh.inputTagsArr.config.content
+                        ,content:lyh.layedit.getContent(lyh.index)//获取富文本编辑器的内容
+                    },
+                    error:function(data) {
+                      console.log(data);
+                    },
+                    success:function(data) {
+                        console.log("data._id:"+data.id);
+                       if(data.code === 4) {//表示登录超时了,要进行重新登录
+                            layer.msg(
+                                data.msg,
+                                {icon:5,time:1000},
+                                function() {
+                                    window.location.href="/";
+                                }
+                            )
+                        } else{
+                            if(data.code) {
+                                layer.msg(
+                                    data.msg,
+                                    {icon:5,time:1000})
+                            } else {
+                                layer.msg(
+                                    data.msg,
+                                    {icon:1,time:1000},
+                                    function() {
+                                        //发表成功,跳转到对应文章界面
+
+                                        window.location.href="/article/"+data.id;
+                                    })
+                            }
+                        }
+                }
+                })
+                return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+            });
+
+        })
+
+
+        // 处理自动生成标签
+        layui.use(['inputTags'],function(){
+            var inputTags = layui.inputTags;
+            lyh.inputTagsArr = inputTags.render({
+                elem:'#inputTags',//定义输入框input对象
+                content: ['js'],//默认标签
+                aldaBtn: false,//是否开启获取所有数据的按钮
+            })
+        })
+
+
+        //处理富文本编辑器
+        layui.use('layedit', function(){
+            lyh.layedit = layui.layedit;
+            //处理上传图片
+            lyh.layedit.set({
+                uploadImage: {
+                    url: "/upload/articlePhoto" //接口url
+                    ,type: 'POST' //默认post
+                }
+            });
+
+            lyh.index = lyh.layedit.build('demo'); //建立编辑器
+        });
+
+        layui.use(['element','form'], function(){
+            var element = layui.element;
+
+            //获取hash来切换选项卡，假设当前地址的hash为lay-id对应的值
+            var layid = location.hash.replace(/^#test1=/, '');
+            element.tabChange('test1', layid); //假设当前地址为：http://a.com#test1=222，那么选项卡会自动切换到“发送消息”这一项
+
+            //监听Tab切换，以改变地址hash值
+            element.on('tab(test1)', function(){
+                location.hash = 'test1='+ this.getAttribute('lay-id');
+            });
+
+            var form = layui.form;
+            form.verify({
+                phone: function(value, item) { //value：表单的值、item：表单的DOM对象
+                    if (!/^1[3-9]\d{9}$/.test(value)) {
+                        return '手机号码错误';
+                    }
+                }
+                ,email:function(value, item) { //value：表单的值、item：表单的DOM对象
+                    // if (!new RegExp("^1\w{2,}@[\\da-z]{2,}(\.[a-z]{2,6}){1,2}$,i).test(value)) {
+                   if(!/^1\w{2,}@[\\da-z]{2,}(\.[a-z]{2,6}){1,2}$/i.test(value)){
+                        return '邮箱错误';
+                    }
+                }
+            });
+
+            form.on('submit(modify)', function(data){
+                // console.log(data.elem) //被执行事件的元素DOM对象，一般为button对象
+                // console.log(data.form) //被执行提交的form对象，一般在存在form标签时才会返回
+                // console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
+
+                //通过ajax提交数据
+                $.ajax({
+                    method:"get",
+                    url:"/update",
+                    data:data.field,
+                    success:function(data) {
+
+                    }
+                })
+                return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+            });
+        });
+        //处理点击修改按钮
+        // modifyRest类显示,即对应的修改框出现,complete框消失
+        $("td button").on("click",function() {
+            $(this).parent().prev().children(".complete").hide().next(".modifyRest").show();
+        })
+
+
+
+        //处理上传头像图片
+        layui.use('upload', function(){
+            var upload = layui.upload;
+
+            //执行实例
+            var uploadInst = upload.render({
+                elem: '#upload' //绑定元素 //对应Button
+                ,url: '/upload/photo' //上传接口
+                // ,size:300
+                ,done: function(data){
+                    //上传完毕回调
+
+                    if(data.code === 4) {//表示登录超时了,要进行重新登录
+                        layer.msg(
+                            data.msg,
+                            {icon:5,time:1000},
+                            function() {
+                                window.location.href="/";
+                            }
+                        )
+                    } else{
+                        if(data.code) {
+                            layer.msg(
+                                data.msg,
+                                {icon:5,time:1000})
+                        } else {
+                            layer.msg(
+                                data.msg,
+                                {icon:1,time:1000},
+                                function() {
+                                    //上传成功进行刷新
+                                    window.location.reload();
+                                })
+                        }
+                    }
+                }
+                ,error: function(){
+                    //请求异常回调
+                }
+            });
+        });
+
+
+
+
+
+    </script>
+</body>
+</html>

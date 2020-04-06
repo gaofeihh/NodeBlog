@@ -1,0 +1,16 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "9145154",
+      "name": "消息列表访问取消",
+      "font_class": "cancel",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    }
+  ]
+}

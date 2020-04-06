@@ -1,0 +1,52 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title><%=titile%></title>
+        <link rel="stylesheet" href="static/layui/css/layui.css">
+        <script src="static/layui/layui.js"></script>
+        <!--引入jquery -->
+        <script src="https://cdn.bootcss.com/jquery/3.4.0/jquery.js"></script>
+        <style>
+            #menu{
+                height: 40px;
+            }
+            #menu ul {
+                list-style-type: none;
+                padding: 0;
+                float: right;
+            }
+            #menu ul li{
+                float: left;
+                height: 40px;
+                width: 80px;
+                text-align: center;
+                line-height: 40px;
+            }
+            #menu ul::after{
+                content: "";
+                height: 40px;
+                width: 80px;
+                text-align: center;
+                line-height: 40px;
+
+            }
+        </style>
+    </head>
+    <body>
+        <div id="menu">
+            <ul class="iconfont">
+                <li><a href="">首页</a></li>
+                <li><a href="">文章</a></li>
+                <li><a href="javascript:" id="usercenter">个人中心</a></li>
+                <li><a href="">联系</a></li>
+            </ul>
+        </div>
+    </body>
+    <script>
+
+    </script>
+</html>
+
+
+
+
