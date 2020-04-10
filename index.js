@@ -73,5 +73,8 @@ app.use("/upload",require("./routers/upload"));
 //监听发表文章路由
 app.use("/article",require("./routers/article"));
 
+//监听评论路由
+app.use("/comment",require("./routers/comment"));
+
 
 

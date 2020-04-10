@@ -266,12 +266,12 @@
                         console.log("data._id:"+data.id);
                        if(data.code === 4) {//表示登录超时了,要进行重新登录
                             layer.msg(
-                                data.msg,
-                                {icon:5,time:1000},
-                                function() {
-                                    window.location.href="/";
-                                }
-                            )
+                               data.msg,
+                               {icon:5,time:1000},
+                               function() {
+                                   window.location.href="/";
+                               }
+                           )
                         } else{
                             if(data.code) {
                                 layer.msg(

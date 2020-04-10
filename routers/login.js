@@ -3,7 +3,6 @@ const user = require("../model/user.js");
 
 module.exports = function (req,res) {
     let data = req.body;
-    console.log(data);
     //与数据库进行匹配
     //因为存在数据库里的密码是加密的,所以登录的密码也需要加密,才能进行匹配
     let pwd  = crypto.createHash("sha256").update(data.pwd).digest("hex");

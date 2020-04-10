@@ -6,7 +6,7 @@ const commentSchema = new Schema({
     date:{type:Date,default:Date.now},
     content:{type:String,require:true},
     //评论的评论
-    comment:[{type:Schema.ObjectId,ref:"comment"}]
+    comment:[{type:Schema.Types.ObjectId,ref:"comment"}]
 })
 
 module.exports = mongoose.model("comment",commentSchema);

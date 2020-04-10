@@ -2,7 +2,6 @@
 const user = require("../model/user");
 
 module.exports = (req,res) => {
-    console.log(req.query);
     let  reqData = req.query;
     if(req.session.ifLogin) {
         //处理要更新的内容

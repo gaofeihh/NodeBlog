@@ -133,7 +133,6 @@ function deletePho(_id,photoTail){
                     }
 
                 } else {
-                    console.log(req.file.originalname);
                     //不需要保存在数据库
                     //返回给前端,利用富文本编辑器显示
 
