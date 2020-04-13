@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--引入layui 注意路径-->
+    <script src="/layui/layui.js"></script>
+    <link rel="stylesheet" href="/layui/css/layui.css">
+    <!--引入jquery -->
+    <script src="https://cdn.bootcss.com/jquery/3.4.0/jquery.js"></script>
+</head>
+<body>
+<div id="mainPage">
+    <ul id="articleUl"></ul>
+</div>
+<div id="article"></div>
+<script>
+    layui.use('laypage', function(){
+        var laypage = layui.laypage;
+        console.log("传过"+<%=len%>);
+        // 执行一个laypage实例
+        laypage.render({
+            elem: 'article' //注意，这里的 test1 是 ID，不用加 # 号
+            ,count: <%=len%>//文章总数
+            ,limit:5//每一页的文章数
+            ,jump: function(obj, first) {
+                //obj包含了当前分页的所有参数，比如：
+                console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+                console.log(obj.limit); //得到每页显示的条数
+                ajax((obj.curr - 1) * 5);
+            }
+        });
+
+    });
+
+    function ajax(skip) {
+        var pageCon=""
+        var oUl = $("#articleUl");
+        $.ajax({
+            method:"POST",
+            url:"/articleAll",
+            data:{
+                skip:skip
+            },
+            success:function(data) {
+                console.log(data);
+
+                data.data.forEach(item=>{
+                    pageCon += `<li><a href="/article/${item._id}" target="_blank">${item.title}</a></li>`
+
+                })
+
+
+                oUl.html(pageCon);
+
+            }
+         })
+
+    }
+</script>
+</body>
+</html>

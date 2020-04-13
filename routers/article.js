@@ -3,6 +3,8 @@ const router = express.Router();
 
 const article = require("../model/article");
 
+
+
 router.post("/",(req,res)=>{
     let articleData = req.body;
     if(req.session.ifLogin) {

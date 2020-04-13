@@ -76,7 +76,8 @@ app.use("/article",require("./routers/article"));
 app.use("/comment",require("./routers/comment"));
 
 //监听显示所有文章
-app.get("/articleAll",require("./routers/articleAll"));
+app.use("/articleAll",require("./routers/articleAll"));
 
-
+//监听管理文章查询
+app.use("/queryArtic",require("./routers/queryArticle"));
 

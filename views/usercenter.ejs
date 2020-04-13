@@ -183,11 +183,10 @@
                 </div>
                 </form>
                 </div>
-
-                <!-- 修改密码-->
+<!--................................修改密码.................................-->
                 <div class="layui-tab-item">修改密码</div>
 
-                <!-- 上传头像-->
+<!--................................上传头像..................................-->
                 <div class="layui-tab-item">
 
                     <button type="button" class="layui-btn" id="upload">
@@ -195,7 +194,7 @@
                     </button>
                 </div>
 
-                <!--发表文章-->
+<!--.................................发表文章..................................-->
                 <%if(data.user == "admin") {%>
                 <div class="layui-tab-item setPadding layui-bg-gray">
                     <form class="layui-form">
@@ -233,11 +232,42 @@
 
                     </form>
                 </div>
+
+<!--.....................................管理文章...................................-->
+                <div class="layui-tab-item">
+                    <form class="layui-form">
+                        <div class="layui-input-inline">
+                            <input type="text" name="queryAritcle"   lay-verify="required" placeholder="请输入查询关键词" autocomplete="off" class="layui-input">
+                        </div>
+                        <button type="button" class="layui-btn" lay-submit lay-filter="query">查询</button>
+                    </form>
+
+                    <table class="layui-table">
+                        <colgroup>
+                            <col width="25%">
+                            <col width="50%">
+                            <col>
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th>文章</th>
+                            <th>删除</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+
+                </div>
                 <%}%>
             </div>
         </div>
     </div>
     <script>
+
+
+
+
         var lyh = lyh||{};//存储所有全局变量 主要是因为在发表文章里,涉及到了标签生成模块,富文本编辑模块的内容,
         // 所以要取到各自的内容,则必须将他们存储数据的变量变成全局变量,造成全局变量过多,所以直接只定义一个全局变量,其余
         // 的作为该变量的属性进行存储
@@ -291,6 +321,18 @@
                 }
                 })
                 return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+            });
+            // 处理:管理文章
+            form.on('submit(queryAritcle)',function(data) {
+                $.ajax({
+                    method:"post",
+                    url:"queryArticle",
+                    data:data.field,
+                    success:function(data) {
+
+                    },
+                })
+
             });
 
         })
