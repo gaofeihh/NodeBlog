@@ -79,5 +79,8 @@ app.use("/comment",require("./routers/comment"));
 app.use("/articleAll",require("./routers/articleAll"));
 
 //监听管理文章查询
-app.use("/queryArtic",require("./routers/queryArticle"));
+app.use("/queryArticle",require("./routers/queryArticle"));
+
+//监听管理文章删除
+app.use("/deleArticle",require("./routers/deleArticle"));
 

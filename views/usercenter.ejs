@@ -237,15 +237,14 @@
                 <div class="layui-tab-item">
                     <form class="layui-form">
                         <div class="layui-input-inline">
-                            <input type="text" name="queryAritcle"   lay-verify="required" placeholder="请输入查询关键词" autocomplete="off" class="layui-input">
+                            <input type="text" name="queryArticle"   lay-verify="required" placeholder="请输入查询关键词" autocomplete="off" class="layui-input">
                         </div>
                         <button type="button" class="layui-btn" lay-submit lay-filter="query">查询</button>
                     </form>
-
-                    <table class="layui-table">
+                    <form class="layui-form">
+                    <table class="layui-table manageArticle">
                         <colgroup>
-                            <col width="25%">
-                            <col width="50%">
+                            <col width="75%">
                             <col>
                         </colgroup>
                         <thead>
@@ -257,7 +256,7 @@
                         <tbody>
                         </tbody>
                     </table>
-
+                    </form>
                 </div>
                 <%}%>
             </div>
@@ -322,18 +321,55 @@
                 })
                 return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
             });
-            // 处理:管理文章
-            form.on('submit(queryAritcle)',function(data) {
+            // 处理管理文章中的查询
+            form.on('submit(query)',function(data) {
+                console.log(data.field);
                 $.ajax({
                     method:"post",
                     url:"queryArticle",
                     data:data.field,
                     success:function(data) {
+                        console.log(data);
+                        if(data) {
+                            searchTable(data);
+                        } else{
+                            console.log("查询失败");
+                        }
 
                     },
                 })
-
             });
+            function searchTable(data) {
+                var $tbody = $(".manageArticle tbody");
+                var html="";
+                data.forEach(item=>{
+                    html+=`<tr>
+                    <td><a href="/article/${item._id}">${item.title}</a></td>
+                    <td>
+                        <button data-id=${item._id} type="button" class="layui-btn" lay-submit lay-filter="delete">删除</button>
+                    </td>
+                   </tr>`
+                })
+                $tbody.html(html);
+            }
+
+           //处理管理文章中的删除
+            form.on('submit(delete)',function(data) {
+                let _id = $(this).attr("data-id");
+                $(this).parent().parent().remove();
+                $.ajax({
+                    method:"post",
+                    url:"/deleArticle",
+                    data:{
+                        _id:_id
+                    },
+                    success:function(data) {
+
+                    },
+                })
+            });
+
+
 
         })
 
